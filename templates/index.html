@@ -134,19 +134,19 @@
     ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <script>
+      const labels = [
+        "Clean",
+        "Toxic",
+        "Severe Toxic",
+        "Obscene",
+        "Threat",
+        "Insult",
+        "Identity Hate",
+      ];
+
       const populateChart = (
         probabilities = new Array(labels.length).fill(0)
       ) => {
-        const labels = [
-          "Clean",
-          "Toxic",
-          "Severe Toxic",
-          "Obscene",
-          "Threat",
-          "Insult",
-          "Identity Hate",
-        ];
-
         const barColors = [
           "rgba(75, 192, 192, 0.2)",
           "rgba(255, 205, 86, 0.2)",
