@@ -4,7 +4,7 @@ from nltk.corpus import stopwords
 import os
 stop_words = set(stopwords.words('english'))
 
-SAVED_MODEL_DIR = "model"
+SAVED_MODEL_DIR = "models"
 MODEL_VERSION = "v1"
 
 app = Flask(__name__)
@@ -63,13 +63,10 @@ def home():
             return "Bad Request", 400
 
         model = loadModel()
-        [res] = model([data["text"]])
-
-        print(res)
+        [res] = model.predict([data["text"]])
 
         return {
-            "value": str(res),
-            "sentiment": "negative" if res < 0 else ("positive" if res > 0 else "neutral")
+            "distribution": str(list(res)),
         }, 200
     else:
         return render_template("index.html")
