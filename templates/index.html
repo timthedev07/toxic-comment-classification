@@ -158,7 +158,9 @@
           "rgba(201, 203, 207, 0.6)",
         ];
 
-        new Chart("probability-chart", {
+        window.bar.destroy();
+
+        return new Chart("probability-chart", {
           type: "bar",
           data: {
             labels,
@@ -196,7 +198,7 @@
         const resElem = document.getElementById("probability-chart");
         const element = document.getElementById("submit-button");
 
-        populateChart();
+        let chart = populateChart();
 
         element.addEventListener("click", () => {
           const loader = document.getElementById("loading");
@@ -219,7 +221,8 @@
               const result = await res.json();
 
               const { distribution } = result;
-              populateChart(JSON.parse(distribution));
+              chart.destroy();
+              chart = populateChart(JSON.parse(distribution));
             })
             .catch((er) => {
               console.log(er);
