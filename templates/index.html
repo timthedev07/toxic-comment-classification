@@ -145,7 +145,7 @@
         "Identity Hate",
       ];
 
-      const populateChart = (
+      const createChart = (
         probabilities = new Array(labels.length).fill(0)
       ) => {
         const barColors = [
@@ -158,8 +158,6 @@
           "rgba(201, 203, 207, 0.6)",
         ];
 
-        window.bar.destroy();
-
         return new Chart("probability-chart", {
           type: "bar",
           data: {
@@ -171,7 +169,6 @@
               },
             ],
           },
-          responsive: true,
           options: {
             title: {
               display: true,
@@ -198,7 +195,7 @@
         const resElem = document.getElementById("probability-chart");
         const element = document.getElementById("submit-button");
 
-        let chart = populateChart();
+        let chart = createChart();
 
         element.addEventListener("click", () => {
           const loader = document.getElementById("loading");
@@ -221,8 +218,8 @@
               const result = await res.json();
 
               const { distribution } = result;
-              chart.destroy();
-              chart = populateChart(JSON.parse(distribution));
+              chart.data.datasets[0].data = JSON.parse(distribution);
+              chart.update();
             })
             .catch((er) => {
               console.log(er);
